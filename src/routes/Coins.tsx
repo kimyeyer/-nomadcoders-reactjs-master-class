@@ -1,4 +1,3 @@
-import { useEffect, useState } from "react";
 import { useQuery } from "react-query";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
@@ -54,7 +53,7 @@ const Img = styled.img`
   margin-right: 10px;
 `;
 
-interface ICoin {
+export interface ICoin {
   id: string;
   name: string;
   symbol: string;
@@ -63,26 +62,6 @@ interface ICoin {
   is_active: boolean;
   type: string;
 }
-const dummyCoins: ICoin[] = [
-  {
-    "id": "btc-bitcoin",
-    "name": "Bitcoin",
-    "symbol": "BTC",
-    "rank": 1,
-    "is_new": false,
-    "is_active": true,
-    "type": "coin"
-  },
-  {
-    "id": "eth-ethereum",
-    "name": "Ethereum", 
-    "symbol": "ETH",
-    "rank": 2,
-    "is_new": false,
-    "is_active": true,
-    "type": "coin"
-  },
-]
 
 function Coins() {
   const {isLoading, data} = useQuery<ICoin[]>("allCoins", fetchCoins);

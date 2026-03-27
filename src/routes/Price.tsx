@@ -1,6 +1,4 @@
-import React from 'react'
 import styled from 'styled-components'
-import { PriceData } from './Coin';
 
 const Card = styled.div`
   background: ${(props) => props.theme.subBgColor};
