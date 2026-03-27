@@ -3,6 +3,7 @@ import { useQuery } from "react-query";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { fetchCoins } from "../api";
+import { Helmet } from "react-helmet";
 
 const Container = styled.div`
   padding: 0px 20px;
@@ -62,20 +63,37 @@ interface ICoin {
   is_active: boolean;
   type: string;
 }
+const dummyCoins: ICoin[] = [
+  {
+    "id": "btc-bitcoin",
+    "name": "Bitcoin",
+    "symbol": "BTC",
+    "rank": 1,
+    "is_new": false,
+    "is_active": true,
+    "type": "coin"
+  },
+  {
+    "id": "eth-ethereum",
+    "name": "Ethereum", 
+    "symbol": "ETH",
+    "rank": 2,
+    "is_new": false,
+    "is_active": true,
+    "type": "coin"
+  },
+]
 
 function Coins() {
-  const {isLoading, data} = useQuery<ICoin[]>("allCoins", fetchCoins);
+  /* const {isLoading, data} = useQuery<ICoin[]>("allCoins", fetchCoins);
 
-  // useEffect(() => {
-  //   (async () => {
-  //     const response = await fetch("https://api.coinpaprika.com/v1/coins");
-  //     const json = await response.json();
-  //     setCoins(json.slice(0, 100));
-  //     setLoading(false);
-  //   })();
-  // }, []);
   return (
     <Container>
+      <Helmet>
+          <title>
+            코인
+          </title>
+      </Helmet>
       <Header>
         <Title>코인</Title>
       </Header>
@@ -83,7 +101,7 @@ function Coins() {
         <Loader>Loading...</Loader>
       ) : (
         <CoinsList>
-          {data?.slice(0,100).map((coin) => (
+          {(data ? data : dummyCoins).slice(0,100).map((coin) => (
             <Coin key={coin.id}>
               <Link
                 to={{
@@ -99,6 +117,34 @@ function Coins() {
         </CoinsList>
       )}
     </Container>
-  );
+  ); */
+
+  return(
+    <Container>
+      <Helmet>
+          <title>
+            코인
+          </title>
+      </Helmet>
+      <Header>
+        <Title>코인</Title>
+      </Header>
+        <CoinsList>
+          {(dummyCoins).slice(0,100).map((coin) => (
+            <Coin key={coin.id}>
+              <Link
+                to={{
+                  pathname: `/${coin.id}`,
+                  state: { name: coin.name },
+                }}
+              >
+                <Img src={`https://cryptoicon-api.pages.dev/api/icon/${coin.symbol.toLowerCase()}`}/>
+                {coin.name} &rarr;
+              </Link>
+            </Coin>
+          ))}
+        </CoinsList>
+    </Container>
+  )
 }
 export default Coins;

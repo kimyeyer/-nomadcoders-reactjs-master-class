@@ -1,11 +1,13 @@
 import { useEffect, useState } from "react";
-import { Switch, Route, useLocation, useParams, useRouteMatch } from "react-router";
+import { Switch, Route, useLocation, useParams, useRouteMatch, useHistory } from "react-router";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import Chart from "./Chart";
 import Price from "./Price";
 import { useQuery } from "react-query";
 import { fetchCoinInfo, fetchCoinTickers } from "../api";
+import { Helmet } from "react-helmet";
+
 
 const Title = styled.h1`
   font-size: 48px;
@@ -77,7 +79,26 @@ const Header = styled.header`
   justify-content: center;
   align-items: center;
 `;
-
+const BackButton = styled.button`
+    position: absolute;
+    left: 10px;
+    top: 10px;  
+    width: 30px;
+    height: 30px;
+    font-size: 20px;
+    border-radius: 15px;
+    border: none;
+    background-color: #747d8c;
+    color: #a4b0be;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    &:hover {
+        background-color: #a4b0be;
+        color: #747d8c;
+    }
+`;
 interface RouteParams {
     coinId: string;
 }
@@ -106,7 +127,7 @@ interface InfoData {
     last_data_at: string;
 }
 
-interface PriceData {
+export interface PriceData {
     id: string;
     name: string;
     symbol: string;
@@ -139,20 +160,80 @@ interface PriceData {
         };
     };
 }
+const infoDummyData: InfoData = {
+  "id": "btc-bitcoin",
+  "name": "Bitcoin",
+  "symbol": "BTC",
+  "rank": 1,
+  "is_new": false,
+  "is_active": true,
+  "type": "coin",
+  "description": "Bitcoin is a cryptocurrency and worldwide payment system. It is the first decentralized digital currency, as the system works without a central bank or single administrator.",
+  "message": "<string>",
+  "open_source": true,
+  "hardware_wallet": true,
+  "started_at": "2009-01-03T00:00:00Z",
+  "development_status": "Working product",
+  "proof_type": "Proof of work",
+  "org_structure": "Decentralized",
+  "hash_algorithm": "SHA256",
+  "first_data_at": "2018-10-03T11:48:19Z",
+  "last_data_at": "2019-05-03T11:00:00"
+}
 
+const tickersDummyData: PriceData = {
+  "id": "btc-bitcoin",
+  "name": "Bitcoin",
+  "symbol": "BTC",
+  "rank": 1,
+  "circulating_supply": 17007062,
+  "total_supply": 17007062,
+  "max_supply": 21000000,
+  "beta_value": 0.735327,
+  "first_data_at": "2010-11-14T07:20:41Z",
+  "last_updated": "2018-11-14T07:20:41Z",
+  "quotes": {
+    "USD": {
+      "price": 5162.15941296,
+      "volume_24h": 7304207651.1585,
+      "volume_24h_change_24h": -2.5,
+      "market_cap": 91094433242,
+      "market_cap_change_24h": 1.6,
+      "percent_change_15m": 0,
+      "percent_change_30m": 0,
+      "percent_change_1h": 0,
+      "percent_change_6h": 0,
+      "percent_change_12h": -0.09,
+      "percent_change_24h": 1.59,
+      "percent_change_7d": 0.28,
+      "percent_change_30d": 27.39,
+      "percent_change_1y": -37.99,
+      "ath_price": 20089,
+      "ath_date": "2017-12-17T12:19:00Z",
+      "percent_from_price_ath": -74.3
+    }
+  }
+}
 function Coin() {
     const { coinId } = useParams<RouteParams>();
     const { state } = useLocation<RouteState>();
+    console.log(state)
     //useRouteMatch 훅을 이용해서 현재 URL이 /:coinId/price 또는 /:coinId/chart 인지 확인한다.
     const priceMatch = useRouteMatch(`/:coinId/price`);
     const chartMatch = useRouteMatch(`/:coinId/chart`);
-
-    const {isLoading:isInfoLoading, data:infoData} = useQuery(['info',coinId], () => fetchCoinInfo(coinId));
-    const {isLoading:isTickersLoading, data:tickersData} = useQuery(['tickers',coinId], () => fetchCoinTickers(coinId));
+    /* const {isLoading:isInfoLoading, data:infoData} = useQuery<InfoData>(['info',coinId], () => fetchCoinInfo(coinId));
+    const {isLoading:isTickersLoading, data:tickersData} = useQuery<PriceData>(['tickers',coinId], () => fetchCoinTickers(coinId),{
+        // refetchInterval: 5000,
+    });
     
     const loading = isInfoLoading || isTickersLoading;
     return (
         <Container>
+            <Helmet>
+                <title>
+                    {state?.name ? state.name : loading ? "Loading..." : infoData?.name}
+                </title>
+            </Helmet>
             <Header>
                 <Title>
                     {state?.name ? state.name : loading ? "Loading..." : infoData?.name}
@@ -172,8 +253,8 @@ function Coin() {
                             <span>${infoData?.symbol}</span>
                         </OverviewItem>
                         <OverviewItem>
-                            <span>Open Source:</span>
-                            <span>{infoData?.open_source ? "Yes" : "No"}</span>
+                            <span>Price:</span>
+                            <span>{tickersData?.quotes.USD.price.toFixed(2) }</span>
                         </OverviewItem>
                     </Overview>
                     <Description>{infoData?.description}</Description>
@@ -200,13 +281,78 @@ function Coin() {
                             <Price />
                         </Route>
                         <Route path={`/:coinId/chart`}>
-                            <Chart />
+                            <Chart coinId={coinId} />
                         </Route>
                     </Switch>
                 </>
             )}
         </Container>
-    );
+    ); */
+    return (
+        <Container>
+            <Helmet>
+                <title>
+                    {state?.name ? state.name  : infoDummyData?.name}
+                </title>
+            </Helmet>
+            <BackButton>
+                <Link
+                    to={`/`}
+                >&larr;
+                </Link>
+            </BackButton>
+            <Header>
+                <Title>
+                    {state?.name ? state.name: infoDummyData?.name}
+                </Title>
+            </Header>
+         
+                <>
+                    <Overview>
+                        <OverviewItem>
+                            <span>Rank:</span>
+                            <span>{infoDummyData?.rank}</span>
+                        </OverviewItem>
+                        <OverviewItem>
+                            <span>Symbol:</span>
+                            <span>${infoDummyData?.symbol}</span>
+                        </OverviewItem>
+                        <OverviewItem>
+                            <span>Price:</span>
+                            <span>{tickersDummyData?.quotes.USD.price.toFixed(2) }</span>
+                        </OverviewItem>
+                    </Overview>
+                    <Description>{infoDummyData?.description}</Description>
+                    <Overview>
+                        <OverviewItem>
+                            <span>Total Suply:</span>
+                            <span>{tickersDummyData?.total_supply}</span>
+                        </OverviewItem>
+                        <OverviewItem>
+                            <span>Max Supply:</span>
+                            <span>{tickersDummyData?.max_supply}</span>
+                        </OverviewItem>
+                    </Overview>
+                    <Tabs>
+                        <Tab isActive={chartMatch !== null}>
+                            <Link to={`/${coinId}/chart`}>Chart</Link>
+                        </Tab>
+                        <Tab isActive={priceMatch !== null}>
+                            <Link to={`/${coinId}/price`}>Price</Link>
+                        </Tab>
+                    </Tabs>
+                    <Switch>
+                        <Route path={`/:coinId/price`}>
+                            <Price {...tickersDummyData}/>
+                        </Route>
+                        <Route path={`/:coinId/chart`}>
+                            <Chart coinId={coinId} />
+                        </Route>
+                    </Switch>
+                </>
+            
+        </Container>
+    )
 }
 export default Coin;
 
