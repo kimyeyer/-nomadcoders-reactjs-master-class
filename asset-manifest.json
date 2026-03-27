@@ -1,0 +1,17 @@
+{
+  "files": {
+    "main.js": "/-nomadcoders-reactjs-master-class/static/js/main.f07ae008.chunk.js",
+    "main.js.map": "/-nomadcoders-reactjs-master-class/static/js/main.f07ae008.chunk.js.map",
+    "runtime-main.js": "/-nomadcoders-reactjs-master-class/static/js/runtime-main.68345f63.js",
+    "runtime-main.js.map": "/-nomadcoders-reactjs-master-class/static/js/runtime-main.68345f63.js.map",
+    "static/js/2.a34b866c.chunk.js": "/-nomadcoders-reactjs-master-class/static/js/2.a34b866c.chunk.js",
+    "static/js/2.a34b866c.chunk.js.map": "/-nomadcoders-reactjs-master-class/static/js/2.a34b866c.chunk.js.map",
+    "index.html": "/-nomadcoders-reactjs-master-class/index.html",
+    "static/js/2.a34b866c.chunk.js.LICENSE.txt": "/-nomadcoders-reactjs-master-class/static/js/2.a34b866c.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.68345f63.js",
+    "static/js/2.a34b866c.chunk.js",
+    "static/js/main.f07ae008.chunk.js"
+  ]
+}
