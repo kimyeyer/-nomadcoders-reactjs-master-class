@@ -21,7 +21,7 @@ const Header = styled.header`
 const CoinsList = styled.ul``;
 
 const Coin = styled.li`
-  background-color: white;
+  background-color: ${(props) => props.theme.textColor};
   color: ${(props) => props.theme.bgColor};
   border-radius: 15px;
   margin-bottom: 10px;
@@ -85,7 +85,7 @@ const dummyCoins: ICoin[] = [
 ]
 
 function Coins() {
-  /* const {isLoading, data} = useQuery<ICoin[]>("allCoins", fetchCoins);
+  const {isLoading, data} = useQuery<ICoin[]>("allCoins", fetchCoins);
 
   return (
     <Container>
@@ -101,7 +101,7 @@ function Coins() {
         <Loader>Loading...</Loader>
       ) : (
         <CoinsList>
-          {(data ? data : dummyCoins).slice(0,100).map((coin) => (
+          {data?.slice(0,100).map((coin) => (
             <Coin key={coin.id}>
               <Link
                 to={{
@@ -117,34 +117,35 @@ function Coins() {
         </CoinsList>
       )}
     </Container>
-  ); */
+  );
 
-  return(
-    <Container>
-      <Helmet>
-          <title>
-            코인
-          </title>
-      </Helmet>
-      <Header>
-        <Title>코인</Title>
-      </Header>
-        <CoinsList>
-          {(dummyCoins).slice(0,100).map((coin) => (
-            <Coin key={coin.id}>
-              <Link
-                to={{
-                  pathname: `/${coin.id}`,
-                  state: { name: coin.name },
-                }}
-              >
-                <Img src={`https://cryptoicon-api.pages.dev/api/icon/${coin.symbol.toLowerCase()}`}/>
-                {coin.name} &rarr;
-              </Link>
-            </Coin>
-          ))}
-        </CoinsList>
-    </Container>
-  )
+  // return(
+  //   <Container>
+  //     <Helmet>
+  //         <title>
+  //           코인
+  //         </title>
+  //     </Helmet>
+  //     <Header>
+  //       <Title>코인</Title>
+  //     </Header>
+  //       <CoinsList>
+  //         {(dummyCoins).slice(0,100).map((coin) => (
+  //           <Coin key={coin.id}>
+  //             <Link
+  //               to={{
+  //                 pathname: `/${coin.id}`,
+  //                 state: { name: coin.name },
+  //               }}
+  //             >
+  //               <Img src={`https://cryptoicon-api.pages.dev/api/icon/${coin.symbol.toLowerCase()}`}/>
+  //               {coin.name} &rarr;
+  //             </Link>
+  //           </Coin>
+  //         ))}
+  //       </CoinsList>
+        
+  //   </Container>
+  // )
 }
 export default Coins;

@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import { PriceData } from './Coin';
 
 const Card = styled.div`
-  background: #111827;
+  background: ${(props) => props.theme.subBgColor};
   padding: 20px;
   border-radius: 12px;
   margin-top: 20px;
@@ -37,7 +37,7 @@ const Row = styled.div`
 
 const Label = styled.span`
   font-size: 13px;
-  color: #d1d5db;
+  color: ${(props) => props.theme.textColor};
 `;
 
 const Value = styled.span<{ positive: boolean }>`
@@ -46,8 +46,20 @@ const Value = styled.span<{ positive: boolean }>`
 
   color: ${({ positive }) => (positive ? "#ef4444" : "#2255ff")};
 `;
-const Price = (data: PriceData) => {
-  const { quotes: { USD: {
+
+interface PriceProps {
+  percent_change_1h: number;
+  percent_change_1y: number;
+  percent_change_6h: number;
+  percent_change_7d: number;
+  percent_change_12h: number;
+  percent_change_15m: number;
+  percent_change_24h: number;
+  percent_change_30d: number;
+  percent_change_30m: number;
+}
+const Price = (data: PriceProps) => {
+  const {
     percent_change_1h,
     percent_change_1y,
     percent_change_6h,
@@ -57,7 +69,7 @@ const Price = (data: PriceData) => {
     percent_change_24h,
     percent_change_30d,
     percent_change_30m,
-  } } } = data;
+  } = data;
 
   const items = [
     { label: "15m", value: percent_change_15m },
@@ -78,7 +90,7 @@ const Price = (data: PriceData) => {
           <Row key={item.label}>
             <Label>{item.label}</Label>
             <Value positive={item.value >= 0}>
-              {`${(item.value)}%`}
+              {`${(item.value).toFixed(2)}%`}
             </Value>
           </Row>
         ))}
