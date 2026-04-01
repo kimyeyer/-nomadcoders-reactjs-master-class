@@ -2,7 +2,7 @@
   "name": "crypto-tracker",
   "version": "0.1.0",
   "private": true,
-   "dependencies": {
+  "dependencies": {
     "@testing-library/jest-dom": "^5.14.1",
     "@testing-library/react": "^11.2.7",
     "@testing-library/user-event": "^12.8.3",
@@ -19,18 +19,20 @@
     "react-query": "^3.27.0",
     "react-router-dom": "^5.3.0",
     "react-scripts": "4.0.3",
+    "recoil": "^0.7.7",
     "styled-components": "^5.3.1",
     "styled-reset": "^4.3.4",
     "typescript": "^4.4.4",
     "web-vitals": "^1.1.2"
   },
+  "homepage": "https://kimyeyer.github.io/-nomadcoders-reactjs-master-class",
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "deploy": "gh-pages -d build",
-    "predeploy": "npm run build"
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build"
   },
   "eslintConfig": {
     "extends": [
@@ -55,6 +57,5 @@
     "@types/react-query": "^1.2.9",
     "@types/react-router-dom": "^5.3.1",
     "@types/styled-components": "^5.1.15"
-  },
-  "homepage": "https://kimyeyer.github.io/-nomadcoders-reactjs-master-class"
+  }
 }

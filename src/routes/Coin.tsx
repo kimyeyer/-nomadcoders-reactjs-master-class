@@ -1,4 +1,3 @@
-import { useEffect, useState } from "react";
 import { Switch, Route, useLocation, useParams, useRouteMatch, useHistory } from "react-router";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
@@ -7,7 +6,6 @@ import Price from "./Price";
 import { useQuery } from "react-query";
 import { fetchCoinInfo, fetchCoinTickers } from "../api";
 import { Helmet } from "react-helmet";
-import { info } from "console";
 
 
 const Title = styled.h1`
@@ -172,7 +170,6 @@ function Coin() {
     const { isLoading: isTickersLoading, data: tickersData } = useQuery<PriceData>(['tickers', coinId], () => fetchCoinTickers(coinId), {
         // refetchInterval: 5000,
     });
-    console.log(tickersData);
     const loading = isInfoLoading || isTickersLoading;
     return (
         <Container>
@@ -251,71 +248,6 @@ function Coin() {
             )}
         </Container>
     );
-    // return (
-    //     <Container>
-    //         <Helmet>
-    //             <title>
-    //                 {state?.name ? state.name  : infoDummyData?.name}
-    //             </title>
-    //         </Helmet>
-    //         <BackButton>
-    //             <Link
-    //                 to={`/`}
-    //             >&larr;
-    //             </Link>
-    //         </BackButton>
-    //         <Header>
-    //             <Title>
-    //                 {state?.name ? state.name: infoDummyData?.name}
-    //             </Title>
-    //         </Header>
-
-    //             <>
-    //                 <Overview>
-    //                     <OverviewItem>
-    //                         <span>Rank:</span>
-    //                         <span>{infoDummyData?.rank}</span>
-    //                     </OverviewItem>
-    //                     <OverviewItem>
-    //                         <span>Symbol:</span>
-    //                         <span>${infoDummyData?.symbol}</span>
-    //                     </OverviewItem>
-    //                     <OverviewItem>
-    //                         <span>Price:</span>
-    //                         <span>{tickersDummyData?.quotes.USD.price.toFixed(2) }</span>
-    //                     </OverviewItem>
-    //                 </Overview>
-    //                 <Description>{infoDummyData?.description}</Description>
-    //                 <Overview>
-    //                     <OverviewItem>
-    //                         <span>Total Suply:</span>
-    //                         <span>{tickersDummyData?.total_supply}</span>
-    //                     </OverviewItem>
-    //                     <OverviewItem>
-    //                         <span>Max Supply:</span>
-    //                         <span>{tickersDummyData?.max_supply}</span>
-    //                     </OverviewItem>
-    //                 </Overview>
-    //                 <Tabs>
-    //                     <Tab isActive={chartMatch !== null}>
-    //                         <Link to={`/${coinId}/chart`}>Chart</Link>
-    //                     </Tab>
-    //                     <Tab isActive={priceMatch !== null}>
-    //                         <Link to={`/${coinId}/price`}>Price</Link>
-    //                     </Tab>
-    //                 </Tabs>
-    //                 <Switch>
-    //                     <Route path={`/:coinId/price`}>
-    //                         <Price {...tickersDummyData}/>
-    //                     </Route>
-    //                     <Route path={`/:coinId/chart`}>
-    //                         <Chart coinId={coinId} />
-    //                     </Route>
-    //                 </Switch>
-    //             </>
-
-    //     </Container>
-    // )
 }
 export default Coin;
 

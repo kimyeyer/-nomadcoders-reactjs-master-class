@@ -1,19 +1,19 @@
 import React from 'react'
-import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import { BrowserRouter, HashRouter, Route, Switch } from 'react-router-dom';
 import Coins from './routes/Coins';
 import Coin from './routes/Coin';
 const Router = () => {
   return (
-    <BrowserRouter>
+    <HashRouter>
         <Switch>
+            <Route path="/" exact>
+                <Coins></Coins>
+            </Route>
             <Route path="/:coinId">
                 <Coin></Coin>
             </Route>
-            <Route path="/">
-                <Coins></Coins>
-            </Route>
         </Switch>
-    </BrowserRouter>
+    </HashRouter>
   )
 }
 

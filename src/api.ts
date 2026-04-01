@@ -79,7 +79,7 @@ const dummyInfo: InfoData = {
     "first_data_at": "2018-10-03T11:48:19Z",
     "last_data_at": "2019-05-03T11:00:00"
 }
-
+  
 const dummyTickers: PriceData = {
     "id": "btc-bitcoin",
     "name": "Bitcoin",

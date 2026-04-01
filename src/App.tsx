@@ -2,7 +2,11 @@ import styled, { createGlobalStyle, ThemeProvider } from "styled-components";
 import Router from "./Router";
 import { ReactQueryDevtools } from "react-query/devtools";
 import { useThemeMode } from "./ThemeContext";
-import { theme, lightTheme } from "./theme";
+import { lightTheme, darkTheme } from "./theme";
+import { useState } from "react";
+import Header from "./Header";
+import { useRecoilValue } from "recoil";
+import { isDarkAtom } from "./routes/atoms";
 
 const GlobalStyle = createGlobalStyle`
 @import url('https://fonts.googleapis.com/css2?family=Source+Sans+3:ital,wght@0,200..900;1,200..900&display=swap');
@@ -69,70 +73,15 @@ a {
 }
 `;
 
-const Label = styled.label`
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  display: inline-block;
-  width: 60px;
-  height: 30px;
-`;
 
-const Input = styled.input`
-  opacity: 0;
-  width: 0;
-  height: 0;
-
-  &:checked + span {
-    background-color: #4f46e5;
-  }
-
-  &:checked + span:before {
-    transform: translateX(30px);
-  }
-`;
-
-const Slider = styled.span`
-  position: absolute;
-  cursor: pointer;
-  inset: 0;
-  background-color: #ccc;
-  border-radius: 999px;
-  transition: 0.2s;
-
-  &:before {
-    content: "";
-    position: absolute;
-    height: 24px;
-    width: 24px;
-    left: 3px;
-    top: 3px;
-    background-color: white;
-    border-radius: 50%;
-    transition: 0.2s;
-  }
-`;
-interface ToggleProps {
-  checked: boolean;
-  onToggle: () => void;
-}
-
-function Toggle({checked,onToggle}: ToggleProps) {
-  return (
-    <Label>
-      <Input type="checkbox" checked={checked} onChange={onToggle} />
-      <Slider />
-    </Label>
-  );
-}
 function App() {
-  const { isDark, toggleTheme } = useThemeMode();
+  const isDark = useRecoilValue(isDarkAtom);
   return (
-    <ThemeProvider theme={isDark ? theme : lightTheme}>
+    <ThemeProvider theme={isDark ? darkTheme : lightTheme}>
       <GlobalStyle />
+      <Header/>
       <Router />
       <ReactQueryDevtools initialIsOpen={true} />
-      <Toggle checked={isDark} onToggle={toggleTheme} />
     </ThemeProvider>
   );
 }
