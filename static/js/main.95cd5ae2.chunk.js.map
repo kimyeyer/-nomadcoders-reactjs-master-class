@@ -1,0 +1,1 @@
+{"version":3,"sources":["index.js"],"names":["window","process","env"],"mappings":"qGAAsB,qBAAXA,QAA2BA,OAAOC,UAC3CD,OAAOC,QAAU,CAAEC,IAAK,CAAC,G","file":"static/js/main.95cd5ae2.chunk.js","sourcesContent":["if (typeof window !== \"undefined\" && !window.process) {\r\n  window.process = { env: {} };\r\n}"],"sourceRoot":""}
